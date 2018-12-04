@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<title>NASA Analysis Dashboard</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<link rel="stylesheet" href="{{ url_for('static', filename='assets/style.css') }}" type="text/css">
+
+</head>
+
+<body>
+
+  <!-- Weather -->
+  <div class="card content" style="margin: 12px;">
+    <table border="1" class="dataframe" id="tea-table" style="background-color: black; color: tan;">
+      <tbody>
+        {% for key,val  in mars_table.items() %}
+          <tr>
+            <td>{{ key }}</td>
+            <td>{{ val }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="container-fluid" style="display: flex; align-items: center; height: 480px; overflow: auto;">
+
+      <!-- JPL Images -->
+	    <div class="card content"  style="flex: 1;">
+          <div id="carouselJPL" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+              {% for img in jpl_images %}
+              <div class="carousel-item {{ 'active' if img == jpl_images[0]}}">
+                <img class="d-block w-100" src="{{ img['featured_image_url']}}">
+              </div>
+              {% endfor %}
+            </div>
+            <a class="carousel-control-prev" href="#carouselJPL" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselJPL" role="button" data-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
+          </div>
+    </div>
+
+      <!-- Astro Images -->
+    <div class="card content" style="flex: 1;">
+        <div id="carouselAstro" class="carousel slide" data-ride="carousel">
+          <div class="carousel-inner">
+            {% for img in astro_images %}
+            <div class="carousel-item {{ 'active' if img == astro_images[0]}}">
+              <img class="d-block w-100" src="{{ img['img_url']}}">
+              <div class="carousel-caption d-none d-md-block">
+                <p>{{ img['title'] }}</p>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+          <a class="carousel-control-prev" href="#carouselAstro" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="carousel-control-next" href="#carouselAstro" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>
+		</div>
+
+
+
+  </div>
+
+  <div class="container-fluid" style="display: flex;    margin-top: 16px;">
+
+    <!-- Mars News -->
+
+    <div class="card content" style="flex: 1; margin: 8px;">
+      <h1> Mars News</h1>
+      {% for info in nasa_info %}
+      <div class="card" style="background-color: black; color: tan; border-color: chocolate;">
+        <!-- info is a dictionary -->
+        <h3>{{ info['title'] }} </h3>
+        <p>{{ info['para'] }}</p>
+      </div>
+      {% endfor %}
+    </div>
+    <!-- Mars Tweets -->
+    <div class="card content" style="flex: 1; margin: 8px;">
+      <h1> Mars Tweets</h1>
+      {% for tweet in tweeter %}
+      <div class="card" style="background-color: black; color: tan; border-color: chocolate;">
+        <!--refering the information from pymongo thru app.py parameter-->
+        <p>{{tweet['mars_weather']}}</p>
+        <!--got the key from scraper.py -->
+      </div>
+      {% endfor %}
+
+    </div>
+  </div>
+
+</body>
+
+
+  <!-- vdnt moved these  -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+
+      </ul>
+   </body>
+   </html>
